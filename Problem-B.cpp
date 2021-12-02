@@ -16,12 +16,19 @@ void chuanHoa(string &a) // lam 2 xau co do dai bang nhau
         a.insert(0, n, '0');  // .insert(int pos, int n, int ch)
 }
 
-void nhaptime(string song[], int &n)
+void nhaptime(string song[], int &n, int &crossfadeTime)
 {
+    cout << "Enter number songs: ";
     cin >> n;
     
     for (int i = 0; i < n; i++)
+    {
+        cout << "Time Songs [hh:mm:ss] " << i + 1 << "th: ";
         cin >> song[i];
+    }
+
+    cout << "Enter CrossfadeTime (seconds): ";
+    cin >> crossfadeTime;
 }
 
 void CHAR_INT(char &a)
@@ -75,7 +82,35 @@ void format(string &xau)
         xau.insert(0, 1, '0');
 }
 
-string CALC_SUM_TIME (string song[], int n)
+void crossfadeTimes(string &hh, string &mm, string &ss, int crossfadeTime, int n)
+{
+    int sum = 0;
+    int hour, minutes;
+    
+    sum += STRING_INT(hh) * 3600;
+    hour = sum / 3600;
+    
+    sum += STRING_INT(mm) * 60;
+    minutes = sum - (hour * 3600);
+    
+    sum += STRING_INT(ss);
+    
+    sum -= (crossfadeTime * (n - 1));
+
+    hh = "";
+    mm = "";
+    ss = "";
+
+    int maths_minutes = (sum/60)- (hour*60);
+    
+    int maths_seconds = sum - (hour*3600 + minutes);
+    
+    hh += to_string(sum / 3600);
+    mm += to_string(maths_minutes);
+    ss += to_string(maths_seconds);
+}
+
+string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
 {
     string hh = "";
     string mm = "";
@@ -110,8 +145,6 @@ string CALC_SUM_TIME (string song[], int n)
     
     ss += to_string(sum);    // convert int to string;
     
-    format(ss); // format hh:mm:ss  
-    
     sum = 0; // reset variable
     
     sum += count; // tang them count don vi
@@ -134,8 +167,6 @@ string CALC_SUM_TIME (string song[], int n)
 
     mm += to_string(sum);    // convert int to string;
     
-    format(mm); // format hh:mm:ss
-    
     sum = 0; // reset variable
     
     sum += count; // tang them count don vi
@@ -152,20 +183,25 @@ string CALC_SUM_TIME (string song[], int n)
 
     hh += to_string(sum);    // convert int to string;
     
-    format(hh); // format hh:mm:ss
+    crossfadeTimes(hh, mm, ss, crossfadeTime, n);
+    
+    // format hh:mm:ss
+    format(hh); 
+    format(mm);
+    format(ss);
     
     return hh + ":" + mm + ":" + ss;
 }
 
 int main()
 {
-    int n;
+    int n, crossfadeTime;
     
     string time_song[1000];
     
-    nhaptime(time_song, n);
+    nhaptime(time_song, n, crossfadeTime);
     
-    cout << CALC_SUM_TIME(time_song, n);
+    cout << "Total time: " << CALC_SUM_TIME(time_song, n, crossfadeTime);
 
     return 0;
 }

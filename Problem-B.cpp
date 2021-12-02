@@ -4,29 +4,6 @@
 
 using namespace std;
 
-void daonguoc(int &a)
-{
-    int temp = 0;
-    
-    while (a != 0)
-    {
-        temp += a % 10;
-        temp *= 10;
-        a /= 10;
-    }
-    temp /= 10;
-    a = temp;
-}
-
-int stringToNum(char c)     // chuyen char sang so
-{
-    return c - '0';
-}
- 
-char numToString(int n)     // chuyen so sang char
-{
-    return (char)(n+48);
-}
 void chuanHoa(string &a) // lam 2 xau co do dai bang nhau
 {
     int lenTime = 6;
@@ -76,14 +53,6 @@ void deleteChar(string &a, char b)
     }
 }
 
-int getChar(string a, int index)
-{
-    // "334455" => index = 2 => get int 4
-    CHAR_INT(a[index]); // convert Char to Int
-
-    return a[index];
-}
-
 string single(string a, int val1, int val2)
 {
     string b = "";
@@ -98,10 +67,12 @@ int STRING_INT(string a)
     return stoi(a);
 }
 
-int STRING_INT_INDEX(string a, int index)
+string format(string &xau)
 {
-    CHAR_INT(a[index]);
-    return a[index];
+    int len = xau.length();
+
+    if (len < 2)
+        xau.insert(0, 1, '0');
 }
 
 string CALC_SUM_TIME (string song[], int n)
@@ -114,38 +85,35 @@ string CALC_SUM_TIME (string song[], int n)
     {
         deleteChar(song[i], ':');
         chuanHoa(song[i]);
-    }
-    
-    int sum = 0;
-    
+    }  
+
+    // calc seconds
+    int sum = 0; 
     string temp = "";
     
-    // calc seconds
     for (int i = 0; i < n; i++)
     {
-        temp += single(song[i], 4,5); // them vao chuoi
+        temp += single(song[i], 4,5); // noi 2 ki tu lai voi nhau
         
         sum += STRING_INT(temp);    // convert string to int
         
         temp = "";
     }
-    
-    bool isResume = true;
+
     int count = 0;
     
-    while(isResume)
+    if (sum > 59)
     {
-        if (sum > 59)
-        {
-            sum -= 60;
-            count++;
-        } else {
-            isResume = false;
-        }//45 + 56 + 56 = 157 nho 2 = 37
+        count += sum / 60;
+        sum %= 60;
     }
     
     ss += to_string(sum);    // convert int to string;
+    
+    format(ss); // format hh:mm:ss  
+    
     sum = 0; // reset variable
+    
     sum += count; // tang them count don vi
 
     // calc minutes
@@ -156,22 +124,20 @@ string CALC_SUM_TIME (string song[], int n)
         temp = "";
     }
 
-    isResume = true;
     count = 0;
-    
-    while(isResume)
+
+    if (sum > 59)
     {
-        if (sum > 59)
-        {
-            sum -= 60;
-            count++;
-        } else {
-            isResume = false;
-        }
+        count += sum / 60;
+        sum %= 60;
     }
-    
+
     mm += to_string(sum);    // convert int to string;
+    
+    format(mm); // format hh:mm:ss
+    
     sum = 0; // reset variable
+    
     sum += count; // tang them count don vi
     
     // calc hour
@@ -184,23 +150,9 @@ string CALC_SUM_TIME (string song[], int n)
         temp = "";
     }
 
-    isResume = true;
-    count = 0;
-    
-    while(isResume)
-    {
-        if (sum > 23)
-        {
-            sum -= 23;
-            count++;
-        } else {
-            isResume = false;
-        }
-    }
-    
     hh += to_string(sum);    // convert int to string;
-    sum = 0; // reset variable
-    sum += count; // tang them count don vi
+    
+    format(hh); // format hh:mm:ss
     
     return hh + ":" + mm + ":" + ss;
 }

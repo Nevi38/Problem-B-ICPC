@@ -67,7 +67,7 @@ int STRING_INT(string a)
     return stoi(a);
 }
 
-string format(string &xau)
+void format(string &xau)
 {
     int len = xau.length();
 

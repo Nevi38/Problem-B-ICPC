@@ -194,6 +194,8 @@ int main()
     string time_song[1000];
     
     nhaptime(time_song, n, crossfadeTime);
+    
+    cout << CALC_SUM_TIME(time_song, n, crossfadeTime);
 
     return 0;
 }

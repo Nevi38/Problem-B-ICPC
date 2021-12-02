@@ -18,17 +18,11 @@ void chuanHoa(string &a) // lam 2 xau co do dai bang nhau
 
 void nhaptime(string song[], int &n, int &crossfadeTime)
 {
-    cout << "Enter number songs: ";
     cin >> n;
+    cin >> crossfadeTime;
     
     for (int i = 0; i < n; i++)
-    {
-        cout << "Time Songs [hh:mm:ss] " << i + 1 << "th: ";
-        cin >> song[i];
-    }
-
-    cout << "Enter CrossfadeTime (seconds): ";
-    cin >> crossfadeTime;
+        cin >> song[i];  
 }
 
 void CHAR_INT(char &a)
@@ -200,8 +194,6 @@ int main()
     string time_song[1000];
     
     nhaptime(time_song, n, crossfadeTime);
-    
-    cout << "Total time: " << CALC_SUM_TIME(time_song, n, crossfadeTime);
 
     return 0;
 }

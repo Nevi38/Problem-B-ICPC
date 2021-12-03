@@ -1,8 +1,19 @@
 #include <iostream>
 #include <string.h>
 #include <cmath>
+#include <time.h>
+#include <iomanip>
+#include <sstream>
 
 using namespace std;
+
+void conversion(double counts)
+{
+  ostringstream ss;
+  ss.precision(6);
+  ss << fixed << counts;
+  cout << ss.str() << " seconds";
+}
 
 void chuanHoa(string &a) // lam 2 xau co do dai bang nhau
 {
@@ -79,13 +90,11 @@ void format(string &xau)
 void crossfadeTimes(string &hh, string &mm, string &ss, int crossfadeTime, int n)
 {
     int sum = 0;
-    int hour, minutes;
+    int hour, minutes, seconds;
     
     sum += STRING_INT(hh) * 3600;
-    hour = sum / 3600;
     
     sum += STRING_INT(mm) * 60;
-    minutes = sum - (hour * 3600);
     
     sum += STRING_INT(ss);
     
@@ -95,13 +104,13 @@ void crossfadeTimes(string &hh, string &mm, string &ss, int crossfadeTime, int n
     mm = "";
     ss = "";
 
-    int maths_minutes = (sum/60)- (hour*60);
-    
-    int maths_seconds = sum - (hour*3600 + minutes);
-    
-    hh += to_string(sum / 3600);
-    mm += to_string(maths_minutes);
-    ss += to_string(maths_seconds);
+    hour = sum / 3600;
+    minutes = (sum / 60) - (60*hour);
+    seconds = sum - ((hour * 3600) + (minutes * 60));
+
+    hh += to_string(hour);
+    mm += to_string(minutes);
+    ss += to_string(seconds);
 }
 
 string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
@@ -122,9 +131,9 @@ string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
     
     for (int i = 0; i < n; i++)
     {
-        temp += single(song[i], 4,5); // noi 2 ki tu lai voi nhau
+        temp += single(song[i], 4,5);
         
-        sum += STRING_INT(temp);    // convert string to int
+        sum += STRING_INT(temp);
         
         temp = "";
     }
@@ -137,7 +146,7 @@ string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
         sum %= 60;
     }
     
-    ss += to_string(sum);    // convert int to string;
+    ss += to_string(sum);
     
     sum = 0; // reset variable
     
@@ -146,8 +155,8 @@ string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
     // calc minutes
     for (int i = 0; i < n; i++)
     {
-        temp += single(song[i], 2,3); // them vao chuoi
-        sum += STRING_INT(temp);    // convert string to int
+        temp += single(song[i], 2,3);
+        sum += STRING_INT(temp);
         temp = "";
     }
 
@@ -159,7 +168,7 @@ string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
         sum %= 60;
     }
 
-    mm += to_string(sum);    // convert int to string;
+    mm += to_string(sum);
     
     sum = 0; // reset variable
     
@@ -168,14 +177,14 @@ string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
     // calc hour
     for (int i = 0; i < n; i++)
     {
-        temp += single(song[i], 0,1); // them vao chuoi
+        temp += single(song[i], 0,1);
         
-        sum += STRING_INT(temp);    // convert string to int
+        sum += STRING_INT(temp);
         
         temp = "";
     }
 
-    hh += to_string(sum);    // convert int to string;
+    hh += to_string(sum);
     
     crossfadeTimes(hh, mm, ss, crossfadeTime, n);
     
@@ -195,7 +204,23 @@ int main()
     
     nhaptime(time_song, n, crossfadeTime);
     
+    clock_t start, end;   // Declare variable time
+    
+    double time_use;      // Time use
+    
+    start = clock();     // Get time before execute program
+    
     cout << CALC_SUM_TIME(time_song, n, crossfadeTime);
+    
+    end = clock(); 
+    
+    time_use = (double)(end - start) / CLOCKS_PER_SEC;    // Calculator time execute program
+    
+    double times = time_use;
+    
+    cout << endl << "Time excute: ";
 
+    conversion(times);
+    
     return 0;
 }

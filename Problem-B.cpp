@@ -15,7 +15,7 @@ void conversion(double counts)
   cout << ss.str() << " seconds";
 }
 
-void chuanHoa(string &a) // lam 2 xau co do dai bang nhau
+void chuanHoa(string &a)
 {
     int lenTime = 6;
 
@@ -172,7 +172,7 @@ string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
     
     sum = 0; // reset variable
     
-    sum += count; // tang them count don vi
+    sum += count; // increase count unit
     
     // calc hour
     for (int i = 0; i < n; i++)

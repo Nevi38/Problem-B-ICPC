@@ -1,6 +1,6 @@
-/*
-    Author by : Trương Bồ Quốc Thắng
-*/
+/*-------------------------------------------------------
+            Author: Trương Bồ Quốc Thắng
+---------------------------------------------------------*/
 #include <iostream>
 #include <string.h>
 #include <cmath>

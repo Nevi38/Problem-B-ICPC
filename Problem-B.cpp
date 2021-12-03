@@ -1,6 +1,7 @@
 /*-------------------------------------------------------
             Author: Trương Bồ Quốc Thắng
 ---------------------------------------------------------*/
+
 #include <iostream>
 #include <string.h>
 #include <cmath>
@@ -47,8 +48,8 @@ void CHAR_INT(char &a)
 void deleteChar(string &a, char b)
 {
     int len = a.length();
-
     int count = 0;
+    
     string temp = "";
     
     for (int i = 0; i < len; i++)
@@ -71,9 +72,12 @@ void deleteChar(string &a, char b)
 string single(string a, int val1, int val2)
 {
     string b = "";
+    
     CHAR_INT(a[val1]);
     CHAR_INT(a[val2]);
+    
     b += to_string(a[val1]) + to_string(a[val2]);
+    
     return b;
 }
 
@@ -153,7 +157,7 @@ string CALC_SUM_TIME (string song[], int n, int crossfadeTime)
     
     sum = 0; // reset variable
     
-    sum += count; // tang them count don vi
+    sum += count; // increase count unit
 
     // calc minutes
     for (int i = 0; i < n; i++)

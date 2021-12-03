@@ -1,3 +1,6 @@
+/*
+    Author by : Trương Bồ Quốc Thắng
+*/
 #include <iostream>
 #include <string.h>
 #include <cmath>
